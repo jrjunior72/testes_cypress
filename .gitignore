@@ -2,3 +2,9 @@
 
 # cypress/e2e/2-advanced-examples
 
+cypress/reports
+
+cypress/screenshots
+
+cypress/videos
+
