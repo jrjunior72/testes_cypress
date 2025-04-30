@@ -3,15 +3,30 @@ describe('Testes da Agenda de Contatos', () => {
         cy.visit('https://agenda-contatos-react.vercel.app/')
         
         // Adiciona um contato para garantir que teremos um para editar
-        cy.get('input[placeholder="Nome"]').type('Contato Teste')
-        cy.get('input[placeholder="E-mail"]').type('teste@example.com')
-        cy.get('input[placeholder="Telefone"]').type('11999999999')
+        // cy.get('input[placeholder="Nome"]').type('Contato Teste')
+        // cy.get('input[placeholder="E-mail"]').type('teste@example.com')
+        // cy.get('input[placeholder="Telefone"]').type('11999999999')
+        // cy.get('button.adicionar').click()
+    })
+
+    it('Deve incluir um novo contato', () => {
+        // Preenche o formulário
+        cy.get('input[placeholder="Nome"]').type('Novo Contato')
+        cy.get('input[placeholder="E-mail"]').type('novo@example.com')
+        cy.get('input[placeholder="Telefone"]').type('11999998888')
+        
+        // Submete o formulário
         cy.get('button.adicionar').click()
+        
+        // Verifica se o contato aparece na lista
+        cy.contains('.contato', 'Novo Contato').should('exist')
+        cy.contains('.contato', 'novo@example.com').should('exist')
+        cy.contains('.contato', '11999998888').should('exist')
     })
 
     it('Deve alterar um contato existente corretamente', () => {
         // 1. Encontra o contato na lista e clica no botão editar
-        cy.contains('.contato', 'Contato Teste')
+        cy.contains('.contato', 'Novo Contato')
             .find('.sc-gueYoa > .edit')
             .click()
             
@@ -32,29 +47,14 @@ describe('Testes da Agenda de Contatos', () => {
         cy.contains('.contato', 'Contato Teste').should('not.exist')
     })
 
-    it('Deve incluir um novo contato', () => {
-        // Preenche o formulário
-        cy.get('input[placeholder="Nome"]').type('Novo Contato')
-        cy.get('input[placeholder="E-mail"]').type('novo@example.com')
-        cy.get('input[placeholder="Telefone"]').type('11999998888')
-        
-        // Submete o formulário
-        cy.get('button.adicionar').click()
-        
-        // Verifica se o contato aparece na lista
-        cy.contains('.contato', 'Novo Contato').should('exist')
-        cy.contains('.contato', 'novo@example.com').should('exist')
-        cy.contains('.contato', '11999998888').should('exist')
-    })
-    
     it('Deve remover um contato existente', () => {
         // Encontra o contato de teste e clica no botão deletar
-        cy.contains('.contato', 'Contato Teste')
+        cy.contains('.contato', 'Contato Editado')
         .find('.delete')
         .click()
         
         // Verifica se o contato foi removido
-        cy.contains('.contato', 'Contato Teste').should('not.exist')
+        cy.contains('.contato', 'Contato Editado').should('not.exist')
     })
     
 })
